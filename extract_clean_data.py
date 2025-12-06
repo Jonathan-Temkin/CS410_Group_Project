@@ -14,7 +14,7 @@ if first_time:
     nltk.download('punkt_tab')
 stop_words = set(stopwords.words('english'))
 
-#initialization & paramters for stackoverflow API
+#initialization & parameters for stackoverflow API
 site = StackAPI('stackoverflow')
 site.page_size = 10
 site.max_pages = 1
