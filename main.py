@@ -1,6 +1,7 @@
 from bm25_rm3_index import build_index, search_similar_questions
 import download_dataset
 import generate_config
+import data_pipeline_kaggle
 
 def main():
     print("\n=== Checking Config File ===")
@@ -8,6 +9,9 @@ def main():
 
     print("\n=== Checking data installation ===")
     download_dataset.install_data()
+
+    print("\n=== Extracting and cleaning data")
+    data = data_pipeline_kaggle.process_data()
 
     print("\n=== Building Lucene index (if needed) ===")
     build_index()
