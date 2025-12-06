@@ -1,6 +1,14 @@
 from bm25_rm3_index import build_index, search_similar_questions
+import download_dataset
+import generate_config
 
 def main():
+    print("\n=== Checking Config File ===")
+    generate_config.generate_kaggle_config()
+
+    print("\n=== Checking data installation ===")
+    download_dataset.install_data()
+
     print("\n=== Building Lucene index (if needed) ===")
     build_index()
 
@@ -17,3 +25,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+
