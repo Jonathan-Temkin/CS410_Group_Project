@@ -402,7 +402,17 @@ class FusionReranker:
         if "raw" in result:
             try:
                 raw_data = json.loads(result["raw"]) if isinstance(result["raw"], str) else result["raw"]
-                return raw_data.get("title", "No title")
+
+                # Dense format: has "title" field directly
+                if "title" in raw_data:
+                    return raw_data["title"]
+
+                # BM25 format: has "contents" field with title on first line
+                if "contents" in raw_data:
+                    contents = raw_data["contents"]
+                    # First line is the title
+                    first_line = contents.split('\n')[0] if '\n' in contents else contents
+                    return first_line if first_line else "No title"
             except:
                 pass
 
@@ -425,7 +435,19 @@ class FusionReranker:
         if "raw" in result:
             try:
                 raw_data = json.loads(result["raw"]) if isinstance(result["raw"], str) else result["raw"]
-                return raw_data.get("body", "No body")
+
+                # Dense format: has "body" field directly
+                if "body" in raw_data:
+                    return raw_data["body"]
+
+                # BM25 format: has "contents" field with title + question + answer
+                if "contents" in raw_data:
+                    contents = raw_data["contents"]
+                    # Skip first line (title) and take the rest
+                    lines = contents.split('\n', 1)
+                    if len(lines) > 1:
+                        return lines[1]
+                    return "No body"
             except:
                 pass
 
@@ -456,13 +478,13 @@ def print_fused_results(results: List[Dict[str, Any]], max_results: int = 5):
 
         # Print question details
         title = result.get("title", "No title")
-        if len(title) > 100:
-            title = title[:97] + "..."
+        # if len(title) > 100:
+        #     title = title[:97] + "..."
         print(f"Title: {title}")
 
         body = result.get("body", "No body")
-        if len(body) > 150:
-            body = body[:147] + "..."
+        # if len(body) > 150:
+        #     body = body[:147] + "..."
         print(f"Body: {body}")
         print(f"{'-'*80}\n")
 

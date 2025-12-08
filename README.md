@@ -10,6 +10,27 @@ CS410 UIUC Group Project - Information Retrieval System for Detecting Duplicate 
 - **Annika Christensen** (annikac7) - Project Coordinator
 - **Sathvik Rajasekaran** (sathvik4)
 
+## Quick Start
+
+```bash
+# 1. Create virtual environment and install dependencies
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+pip install pandas numpy nltk beautifulsoup4 lxml
+pip install pyserini faiss-cpu sentence-transformers
+pip install kaggle stackapi requests
+
+# 2. Set up Kaggle credentials (place kaggle.json in ~/.kaggle/)
+# Or run: python generate_config.py
+
+# 3. Run the full pipeline
+python main.py
+
+# Or use the helper script (activates venv automatically):
+./run.sh
+```
+This will download data, build indexes, and run a test query with all three fusion methods (RRF, Linear, Hybrid). Results are displayed in the terminal.
+
 ## Project Overview
 
 This project develops an intelligent duplicate question retrieval system for Stack Overflow. The system helps users find existing answers to their questions and reduces redundant posts by combining multiple retrieval approaches.
