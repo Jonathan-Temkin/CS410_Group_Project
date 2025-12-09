@@ -24,12 +24,15 @@ pip install kaggle stackapi requests flask
 # Or run: python generate_config.py
 
 # 3. Run the UI
+python main.py
 python app.py
+
+This tells you where to go to interact with the UI (e.g., "Running on http://127.0.0.1:5000", visit this address in a browser)
 
 # Or use the helper script (activates venv automatically):
 ./run.sh
 ```
-This will download data, build indexes, and run a test query with all three fusion methods (RRF, Linear, Hybrid). Results are displayed in the terminal.
+This will download data, build indexes, and run a test query with all three fusion methods (RRF, Linear, Hybrid).
 
 ## Project Overview
 
@@ -210,9 +213,6 @@ score(d) = w1 × norm(score_bm25(d)) + w2 × norm(score_dense(d))
 ```bash
 # Python 3.8 or higher
 python --version
-
-# Required packages
-pip install -r requirements.txt
 ```
 
 ### Required Dependencies
@@ -394,40 +394,6 @@ score = 0.5 × norm(RRF) + 0.5 × norm(Linear)
 
 **When to use**: When you want the best overall performance
 
-## Evaluation Plan
-
-### Metrics
-
-We plan to evaluate using the following IR metrics:
-
-1. **Precision@K**: Proportion of top-K results that are true duplicates
-2. **Recall@K**: Proportion of true duplicates found in top-K
-3. **Mean Reciprocal Rank (MRR)**: Average of 1/rank for first relevant result
-4. **NDCG@K**: Normalized Discounted Cumulative Gain
-
-### Ground Truth
-
-- Use existing duplicate-question labels from Stack Overflow
-- For each query with a known duplicate, check if our system ranks it in top-K
-- Compare performance across all three fusion methods
-
-### Evaluation Strategy
-
-```python
-# Pseudocode for evaluation
-for query, true_duplicate_id in test_set:
-    results = fusion_search(query, top_k=10)
-
-    # Check if true duplicate appears in results
-    ranks = [i for i, r in enumerate(results) if r['id'] == true_duplicate_id]
-
-    if ranks:
-        mrr += 1.0 / (ranks[0] + 1)
-        precision_at_k += 1 if ranks[0] < k else 0
-
-    # ... calculate other metrics
-```
-
 ## Technical Details
 
 ### BM25 Parameters
@@ -463,10 +429,10 @@ for query, true_duplicate_id in test_set:
 - [ ] Add learned-to-rank (LTR) with machine learning
 - [ ] Implement cross-encoder reranking for top results
 - [ ] Add query-adaptive fusion weights
-- [ ] Build web UI for interactive search
 - [ ] Support for incremental index updates
 - [ ] Multi-language support
 - [ ] Integration with StackExchange network (not just StackOverflow)
+- [ ] Migrate from Kaggle StackSample (truncated data) to full StackExchange Data Dump (challenging due to size)
 
 ## Troubleshooting
 
