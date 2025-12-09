@@ -1,10 +1,3 @@
-# We should not be using the API for this.
-# StackOverflow explicitly recommends not using their live API for bulk research.
-# They provide a full offline dump, updated monthly:
-# The Stack Overflow Data Dump (Archive.org)
-# https://archive.org/details/stackexchange
-# I tried to update with safe fetch limits to try and then run it anyways and got my ip blocked........ so I'm trying to redo this with a download of posts
-
 import requests
 from bs4 import BeautifulSoup
 from stackapi import StackAPI
@@ -15,11 +8,6 @@ from nltk.corpus import stopwords
 import html
 import time
 
-# #Initalizations for NLTK
-first_time = False
-if first_time:
-    nltk.download('stopwords')
-    nltk.download('punkt_tab')
 stop_words = set(stopwords.words('english'))
 
 # #initialization & paramters for stackoverflow API

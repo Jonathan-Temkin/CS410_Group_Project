@@ -5,12 +5,6 @@ import subprocess
 from pyserini.search.lucene import LuceneSearcher
 from data_pipeline_kaggle import process_data 
 
-
-# so we can't do the retrieve_process_data with API limits and such, we need to download data
-# but im running into issues with data size for instance from https://archive.org/details/stackexchange, the stackoverflow.com-Posts.7z 
-# is 100 GB and we are not going to be able to upload that to github. need help with team ideas on fixing this
- 
-
 CORPUS_DIR = "processed_corpus"
 INDEX_DIR = "indexes"
 PROCESSED_DIR = "processed"  # For dense retriever
@@ -84,7 +78,7 @@ def build_index():
     
 def create_searcher(use_rm3=True):
     searcher = LuceneSearcher(INDEX_DIR)
-    searcher.set_bm25(k1=1.2, b=0.75) # fine tune these parameters once large corpus not small testing
+    searcher.set_bm25(k1=1.2, b=0.75)
 
     if use_rm3:
         searcher.set_rm3(fb_terms=20, fb_docs=10, original_query_weight=0.5)

@@ -4,10 +4,7 @@ from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 import nltk
 import os
-first_time = False
-if first_time:
-    nltk.download('stopwords')
-    nltk.download('punkt_tab')
+
 stop_words = set(stopwords.words('english'))
 import html
 import warnings

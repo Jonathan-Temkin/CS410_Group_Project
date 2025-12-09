@@ -2,6 +2,11 @@ from bm25_rm3_index import build_index, search_similar_questions
 import download_dataset
 import generate_config
 import data_pipeline_kaggle
+import nltk
+
+nltk.download('punkt', quiet=True)
+nltk.download('punkt_tab', quiet=True)
+nltk.download('stopwords', quiet=True)
 
 try:
     from dense_retriever import dense_search, build_dense_index
